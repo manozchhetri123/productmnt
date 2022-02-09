@@ -6,95 +6,51 @@ class product extends dbconfig{
      parent::__construct();
    }
 
-	public function addproduct(){
-		$sql = "INSERT INTO producttab (pname, pdescription, gender, pstatus)
-		VALUES ('pname', 'pdescription', 'gender','pstatus')"; 
-		
-		if ($con->query($sql) === TRUE) {
- 		 echo "New record created successfully";
-		} else {
-		  echo "Error: " . $sql . "<br>" . $con->error;
+	public function addProduct($pname,$pdescription,$gender,$pstatus){
+		$query= "INSERT INTO producttab (pname, pdescription, gender, pstatus) VALUES ('$pname', '$pdescription', '$gender','$pstatus')"; 
+		$result= mysqli_query($this->dbh,$query); 
+		$data = array('status'=>'success', 'msg'=>"Added successfully.", 'result'=>$result);
+		return $data;
+		}	
+
+	public function addSize($sname,$price,$pid){ 
+
+		$result= mysqli_query($this->dbh,"INSERT INTO sizetab (sname, price,pid) VALUES ('$sname', '$price',(SELECT * FROM producttab WHERE pid=$pid))"); 
+		$data = array('status'=>'success', 'msg'=>"Added successfully.", 'result'=>$result);
+		return $data; 
 		}
 
-		$con->close();
+	public function addCategory($cname,$pid){
+				
+		$result= mysqli_query($this->dbh,"INSERT INTO cateorytab (cname, pid) VALUES ('$cname', (SELECT * FROM producttab WHERE pid=$pid))"); 
+		$data = array('status'=>'success', 'msg'=>"Added successfully.", 'result'=>$result);
+		return $data;
 	}
 
-	public function addsize(){
-		$sql = "INSERT INTO sizetab (sname, price, pid)
-		VALUES ('sname', 'price', 'pid')";
-		
-		if ($con->query($sql) === TRUE) {
- 		 echo "New record created successfully";
-		} else {
-		  echo "Error: " . $sql . "<br>" . $con->error;
-		}
-
-		$con->close();
+	public function addImage($iname,$pid){
+				
+		$result= mysqli_query($this->dbh,"INSERT INTO imagetab (iname, pid) VALUES ('$iname', (SELECT * FROM producttab WHERE pid=$pid))"); 
+		$data = array('status'=>'success', 'msg'=>"Added successfully.", 'result'=>$result);
+		return $data;
 	}
 
-	public function addcategory(){
-		$sql = "INSERT INTO cateorytab (cname, pid)
-		VALUES ('cname', 'pid')";
-		
-		if ($con->query($sql) === TRUE) {
- 		 echo "New record created successfully";
-		} else {
-		  echo "Error: " . $sql . "<br>" . $con->error;
+	public function getProductById($pid){
+				
+		$result= mysqli_query($this->dbh,"SELECT * FROM producttab Where pid = $pid");
+			return $result;
 		}
 
-		$con->close();
+	public function updateProduct($pname,$pdescription,$gender,$pstatus){
+
+		$result= mysqli_query($this->dbh, "UPDATE producttab SET pname='$pname',pdescription='$pdescription', gender='$gender', pstatus='$pstatus' Where pid='$pid'"); 
+			return $result;	
+			}	
+
+
+	public function deleteProduct(){
+		$result= mysqli_query($this->dbh, "DELETE FROM producttab Where pid='$pid'");
+			return $result;	
+		}
 	}
-
-	public function addimage(){
-		$sql = "INSERT INTO imagetab (iname, pid)
-		VALUES ('iname', 'pid')";
-		
-		if ($con->query($sql) === TRUE) {
- 		 echo "New record created successfully";
-		} else {
-		  echo "Error: " . $sql . "<br>" . $con->error;
-		}
-
-		$con->close();
-	}
-
-	public function getproductbyid(){
-		$sql = "SELECT * FROM producttab Where pid ='pid'";
-		
-		if ($con->query($sql) === TRUE) {
- 		 echo "Getting Result...";
-		} else {
-		  echo "Error: " . $sql . "<br>" . $con->error;
-		}
-
-		$con->close();
-
-	}
-
-	public function updateproduct(){
-		$sql = "UPDATE producttab set pname='" . $_POST['pname'] . "',pdescription='" . $_POST['pdescription'] . "',gender='" . $_POST['gender'] . "'pstatus='" . $_POST['pstatus'] . "'";
-
-		if ($con->query($sql) === TRUE) {
-		  echo "Record updated successfully";
-		} else {
-		  echo "Error updating record: " . $con->error;
-		}
-
-		$con->close();
-		}
-
-	public function deleteproduct(){
-		$sql = "DELETE FROM producttab WHERE productid='productid'";
-
-		if ($con->query($sql) === TRUE) {
- 		 echo "Deleting...";
-		} else {
-		  echo "Error: " . $sql . "<br>" . $con->error;
-		}
-
-		$con->close();
-		}
-}
-
 
 ?>

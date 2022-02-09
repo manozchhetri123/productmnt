@@ -36,8 +36,8 @@ header("Location:login.php");
     <form action = "" method = "POST">
 
     <p><h3>LOGIN FORM</h3></p>  
-         Username: <input type = "email" name = "email" /> <br>  
-         Password: <input type = "password" name = "password" /> <br>  
+         Username: <input type = "email" name = "email" required="" /> <br>  
+         Password: <input type = "password" name = "password" required="" /> <br>  
          <input type = "submit" name="login" />  
       </form> 
 

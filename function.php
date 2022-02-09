@@ -16,13 +16,13 @@ $result = mysqli_query($this->dbh,"SELECT email FROM usertab WHERE email='$email
 public function registration($uname,$email,$password)
 {
 $result= mysqli_query($this->dbh," INSERT Into usertab (uname,email,password) values('$uname','$email','$password')");
-return $result;
+return $result; 
 }
 
 public function signin($email,$password)
 	{
 	$result= mysqli_query($this->dbh,"SELECT email from usertab where email='$email' and password='$password'");
-	return $result;
+	return $result; 
 	}
 
 public function run($sql) {

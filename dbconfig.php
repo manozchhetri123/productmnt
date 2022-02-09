@@ -5,7 +5,8 @@ define('password' ,'admin');
 define('database', 'productmanagementdb');
 
 class dbconfig{
-  public $dbh;
+	
+  public $dbh; 
   public function __construct(){
     $con = mysqli_connect(host,username,password,database); 
     $this->dbh = $con;
